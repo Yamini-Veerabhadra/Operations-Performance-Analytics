@@ -512,3 +512,10 @@ Dataset: **Olist Brazilian E-Commerce Public Dataset**
 Source: https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
 
 The project is developed for portfolio, learning, and demonstration purposes.
+
+
+## Live Application
+
+**[Launch Operations Intelligence Dashboard](https://operations-performance-analytics.streamlit.app/)**
+
+Explore operational KPIs, delivery performance, regional analytics, AI anomaly detection, data-quality monitoring, and interactive investigations.
