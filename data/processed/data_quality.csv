@@ -1,0 +1,10 @@
+check,flagged_rows
+Duplicate order IDs,0
+Null order IDs,0
+Missing purchase timestamps,0
+Delivered orders missing delivery timestamps,8
+Carrier handover missing for delivered orders,2
+Delivery timestamp before carrier handover,23
+Orders without a customer match,0
+Item rows without an order match,0
+Payment rows without an order match,0
