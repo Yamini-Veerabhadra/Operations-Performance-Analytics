@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["anomaly_analysis","daily_metrics","data_quality","march_2018_rj_investigation","monthly_performance","state_performance"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table anomaly_analysis
+ref table DateTableTemplate_5a67eeed-6b4f-4978-aa88-62663c7dd984
+ref table LocalDateTable_e01c7304-3db8-4de4-8f0a-81cd33b2c542
+ref table daily_metrics
+ref table LocalDateTable_3860afd8-55d1-476f-a903-dfb5ac19a4ab
+ref table data_quality
+ref table march_2018_rj_investigation
+ref table monthly_performance
+ref table LocalDateTable_49e02d7c-a9c5-45e4-9258-b30eefd228f5
+ref table state_performance
+
+ref cultureInfo en-US
+

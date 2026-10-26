@@ -1,0 +1,96 @@
+table daily_metrics
+	lineageTag: ababba06-54f5-4c42-9347-dccd120a7020
+
+	column day
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6c6dd4b1-6f85-4606-a666-8a828ba383d5
+		summarizeBy: none
+		sourceColumn: day
+
+		variation Variation
+			isDefault
+			relationship: 18449c19-2c92-4ad3-94be-3cb4a7cee081
+			defaultHierarchy: LocalDateTable_3860afd8-55d1-476f-a903-dfb5ac19a4ab.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 2c39fa7d-8521-4760-8b6f-6885812e2530
+		summarizeBy: sum
+		sourceColumn: orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered
+		dataType: int64
+		formatString: 0
+		lineageTag: c24f1bd2-331a-4206-a0db-dc3069daddc3
+		summarizeBy: sum
+		sourceColumn: delivered
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligible
+		dataType: int64
+		formatString: 0
+		lineageTag: 559a6d9a-7e6d-45b3-9890-1360913b2966
+		summarizeBy: sum
+		sourceColumn: eligible
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time
+		dataType: int64
+		formatString: 0
+		lineageTag: abcaff52-eacf-4172-8c00-f9aee3176f20
+		summarizeBy: sum
+		sourceColumn: on_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column late
+		dataType: int64
+		formatString: 0
+		lineageTag: 9cedad22-523d-4878-b720-b1339bf7bc16
+		summarizeBy: sum
+		sourceColumn: late
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time_rate
+		dataType: double
+		lineageTag: 1cd5ecf3-c235-4a72-9155-d3240cd40a6a
+		summarizeBy: sum
+		sourceColumn: on_time_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_rate
+		dataType: double
+		lineageTag: 3e6d9d13-0c85-428e-b5e2-c254869336b8
+		summarizeBy: sum
+		sourceColumn: late_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition daily_metrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\yamin\OneDrive\Desktop\Operations-Performance-Analytics\Operations-Performance-Analytics\data\processed\daily_metrics.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"day", type date}, {"orders", Int64.Type}, {"delivered", Int64.Type}, {"eligible", Int64.Type}, {"on_time", Int64.Type}, {"late", Int64.Type}, {"on_time_rate", type number}, {"late_rate", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

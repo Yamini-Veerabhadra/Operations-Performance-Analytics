@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "72dcbc4ee07343a7a086",
+  "position": {
+    "x": 35,
+    "y": 15,
+    "z": 0,
+    "height": 75,
+    "width": 1200,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Delivery Performance | On-time service and shipping analysis",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "21pt",
+                      "color": "#142D4E"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

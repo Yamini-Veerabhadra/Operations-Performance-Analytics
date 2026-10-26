@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "a78a128c16504e95a0f5",
+  "position": {
+    "x": 35,
+    "y": 15,
+    "z": 0,
+    "height": 75,
+    "width": 1650,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "AI Anomalies & Data Quality | Historical screening and validation",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "21pt",
+                      "color": "#142d4e"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

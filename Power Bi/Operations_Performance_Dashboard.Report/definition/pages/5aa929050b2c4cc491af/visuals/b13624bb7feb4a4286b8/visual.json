@@ -1,0 +1,148 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "b13624bb7feb4a4286b8",
+  "position": {
+    "x": 975,
+    "y": 650,
+    "z": 9000,
+    "height": 360,
+    "width": 900,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "monthly_performance"
+                    }
+                  },
+                  "Property": "purchase_month"
+                }
+              },
+              "queryRef": "monthly_performance.purchase_month",
+              "nativeQueryRef": "purchase_month"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "monthly_performance"
+                        }
+                      },
+                      "Property": "delivered"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(monthly_performance.delivered)",
+              "nativeQueryRef": "Sum of delivered"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "monthly_performance"
+                        }
+                      },
+                      "Property": "late"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(monthly_performance.late)",
+              "nativeQueryRef": "Sum of late"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "monthly_performance"
+                        }
+                      },
+                      "Property": "on_time"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(monthly_performance.on_time)",
+              "nativeQueryRef": "Sum of on_time"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "monthly_performance"
+                        }
+                      },
+                      "Property": "late_rate"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Average(monthly_performance.late_rate)",
+              "nativeQueryRef": "Average of late_rate"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "monthly_performance"
+                        }
+                      },
+                      "Property": "avg_transit_days"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Average(monthly_performance.avg_transit_days)",
+              "nativeQueryRef": "Average of avg_transit_days"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Monthly Delivery Detail'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

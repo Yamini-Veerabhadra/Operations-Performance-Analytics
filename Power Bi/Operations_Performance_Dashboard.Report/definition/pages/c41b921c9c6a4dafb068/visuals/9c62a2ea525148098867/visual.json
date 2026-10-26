@@ -1,0 +1,143 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "9c62a2ea525148098867",
+  "position": {
+    "x": 975,
+    "y": 650,
+    "z": 8000,
+    "height": 360,
+    "width": 900,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "anomaly_analysis"
+                    }
+                  },
+                  "Property": "day"
+                }
+              },
+              "queryRef": "anomaly_analysis.day",
+              "nativeQueryRef": "day"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "anomaly_analysis"
+                        }
+                      },
+                      "Property": "orders"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(anomaly_analysis.orders)",
+              "nativeQueryRef": "Sum of orders"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "anomaly_analysis"
+                        }
+                      },
+                      "Property": "rolling_orders"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(anomaly_analysis.rolling_orders)",
+              "nativeQueryRef": "Sum of rolling_orders"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "anomaly_analysis"
+                        }
+                      },
+                      "Property": "volume_change"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Average(anomaly_analysis.volume_change)",
+              "nativeQueryRef": "Average of volume_change"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "anomaly_analysis"
+                    }
+                  },
+                  "Property": "anomaly"
+                }
+              },
+              "queryRef": "anomaly_analysis.anomaly",
+              "nativeQueryRef": "anomaly"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "anomaly_analysis"
+                        }
+                      },
+                      "Property": "anomaly_score"
+                    }
+                  },
+                  "Function": 1
+                }
+              },
+              "queryRef": "Average(anomaly_analysis.anomaly_score)",
+              "nativeQueryRef": "Average of anomaly_score"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Anomaly Investigation Detail'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,171 @@
+table anomaly_analysis
+	lineageTag: e1d03d62-950b-46ff-b215-fc1b8bc80280
+
+	measure 'Delivery Success Rate' =
+			
+			DIVIDE(
+			    SUM(monthly_performance[delivered]),
+			    SUM(monthly_performance[orders]),
+			    0
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: ce005f9b-ccc4-4c06-a80c-295e3bd03b4f
+
+	measure 'On-Time Delivery %' =
+			
+			DIVIDE(
+			    SUM(monthly_performance[on_time]),
+			    SUM(monthly_performance[eligible])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3682ccea-31a1-46c3-ab32-32b824d0c03e
+
+	measure 'Flagged Anomaly Days' =
+			CALCULATE(
+			    COUNTROWS(anomaly_analysis),
+			    anomaly_analysis[anomaly] = TRUE()
+			)
+		formatString: #,0
+		lineageTag: de44888f-a84c-4ebb-ba6e-c5457b391f1d
+
+	column day
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7ab0ff9f-47a7-48a6-9305-bcd87fc6a143
+		summarizeBy: none
+		sourceColumn: day
+
+		variation Variation
+			isDefault
+			relationship: d85f5a56-4c70-493e-b1d9-5d42bce05d18
+			defaultHierarchy: LocalDateTable_e01c7304-3db8-4de4-8f0a-81cd33b2c542.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column orders
+		dataType: int64
+		formatString: 0
+		lineageTag: b932328e-6c32-46dd-8c4b-a3bca54827e8
+		summarizeBy: sum
+		sourceColumn: orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered
+		dataType: int64
+		formatString: 0
+		lineageTag: ba2423a1-48ef-4457-b139-78bbe558c136
+		summarizeBy: sum
+		sourceColumn: delivered
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligible
+		dataType: int64
+		formatString: 0
+		lineageTag: a0293147-34c7-4e26-b858-91e3b0b9a514
+		summarizeBy: sum
+		sourceColumn: eligible
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 14e46f44-a77a-4b78-bfd8-9d2b675bd4a0
+		summarizeBy: sum
+		sourceColumn: on_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column late
+		dataType: int64
+		formatString: 0
+		lineageTag: c856bd5f-c7f2-4092-b62a-b3d1a7a7a823
+		summarizeBy: sum
+		sourceColumn: late
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time_rate
+		dataType: double
+		lineageTag: c3892eaa-2b4a-477d-bb68-b94080107819
+		summarizeBy: sum
+		sourceColumn: on_time_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_rate
+		dataType: double
+		lineageTag: de3796a1-8989-4f61-8e85-1a29945076e4
+		summarizeBy: sum
+		sourceColumn: late_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column weekday
+		dataType: int64
+		formatString: 0
+		lineageTag: a0dfd8c7-c95c-4bca-84f6-df6bbc7a7994
+		summarizeBy: sum
+		sourceColumn: weekday
+
+		annotation SummarizationSetBy = Automatic
+
+	column rolling_orders
+		dataType: double
+		lineageTag: b00b19e9-c9a4-4f8a-b767-22e79418f936
+		summarizeBy: sum
+		sourceColumn: rolling_orders
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column volume_change
+		dataType: double
+		lineageTag: ea89968d-e58f-4e09-8e95-d2d86b2a885b
+		summarizeBy: sum
+		sourceColumn: volume_change
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomaly
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 83a60131-6c1e-4e79-9c4f-8593dd268ff3
+		summarizeBy: none
+		sourceColumn: anomaly
+
+		annotation SummarizationSetBy = Automatic
+
+	column anomaly_score
+		dataType: double
+		lineageTag: ced1e229-31eb-46a0-adee-fd7e0c288a1a
+		summarizeBy: sum
+		sourceColumn: anomaly_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition anomaly_analysis = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\yamin\OneDrive\Desktop\Operations-Performance-Analytics\Operations-Performance-Analytics\data\processed\anomaly_analysis.csv"),[Delimiter=",", Columns=13, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"day", type date}, {"orders", Int64.Type}, {"delivered", Int64.Type}, {"eligible", Int64.Type}, {"on_time", Int64.Type}, {"late", Int64.Type}, {"on_time_rate", type number}, {"late_rate", type number}, {"weekday", Int64.Type}, {"rolling_orders", type number}, {"volume_change", type number}, {"anomaly", type logical}, {"anomaly_score", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

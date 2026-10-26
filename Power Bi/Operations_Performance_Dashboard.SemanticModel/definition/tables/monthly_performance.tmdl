@@ -1,0 +1,127 @@
+table monthly_performance
+	lineageTag: 1c1dc4b5-cc69-45db-a3b5-47d7cfeeb986
+
+	column purchase_month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: cbc4c881-9ef7-44b4-a0bd-d909ffb31af5
+		summarizeBy: none
+		sourceColumn: purchase_month
+
+		variation Variation
+			isDefault
+			relationship: 5e86375e-f657-4ca7-b73b-b5945e3cac99
+			defaultHierarchy: LocalDateTable_49e02d7c-a9c5-45e4-9258-b30eefd228f5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column orders
+		dataType: int64
+		formatString: #,0
+		lineageTag: 93cb946e-6fde-48a4-8f96-fb5cd4ccd651
+		summarizeBy: sum
+		sourceColumn: orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered
+		dataType: int64
+		formatString: #,0
+		lineageTag: acdfb4e3-31b7-491e-a04a-06a8fdeced6b
+		summarizeBy: sum
+		sourceColumn: delivered
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligible
+		dataType: int64
+		formatString: 0
+		lineageTag: 752d6000-b675-4b12-bd23-138eadf0b36d
+		summarizeBy: sum
+		sourceColumn: eligible
+
+		annotation SummarizationSetBy = Automatic
+
+	column late
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c959298-b781-4e6c-abf3-3febd03ffc17
+		summarizeBy: sum
+		sourceColumn: late
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time
+		dataType: int64
+		formatString: 0
+		lineageTag: be1fead1-0270-4d3c-af7f-7e8166633c75
+		summarizeBy: sum
+		sourceColumn: on_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: double
+		lineageTag: 6d1dde8a-5619-4dab-ad92-08e5529bce32
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_transit_days
+		dataType: double
+		lineageTag: f7f3f956-1004-4dcb-b354-b02df4fc04e5
+		summarizeBy: sum
+		sourceColumn: avg_transit_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_rate
+		dataType: double
+		lineageTag: 27fce7cd-3a02-4575-9fc7-f37f30be2890
+		summarizeBy: sum
+		sourceColumn: late_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_time_rate
+		dataType: double
+		lineageTag: a8fd69d6-7f6c-47c3-a9fc-444e49f8e3a3
+		summarizeBy: sum
+		sourceColumn: on_time_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Month Label' =
+			
+			FORMAT(
+			    monthly_performance[purchase_month],
+			    "MMM yyyy"
+			)
+		lineageTag: acf73b13-6f7b-41c4-b3fa-32fd2900b819
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition monthly_performance = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\yamin\OneDrive\Desktop\Operations-Performance-Analytics\Operations-Performance-Analytics\data\processed\monthly_performance.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"purchase_month", type date}, {"orders", Int64.Type}, {"delivered", Int64.Type}, {"eligible", Int64.Type}, {"late", Int64.Type}, {"on_time", Int64.Type}, {"revenue", type number}, {"avg_transit_days", type number}, {"late_rate", type number}, {"on_time_rate", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,34 @@
+table data_quality
+	lineageTag: 23b964c8-0890-46de-8d3b-4c931b86eedc
+
+	column check
+		dataType: string
+		lineageTag: 77e2b67d-6e67-46a0-ad09-941c6d5280e5
+		summarizeBy: none
+		sourceColumn: check
+
+		annotation SummarizationSetBy = Automatic
+
+	column flagged_rows
+		dataType: int64
+		formatString: 0
+		lineageTag: c8272011-8e28-4039-b38d-863ba70c52d9
+		summarizeBy: sum
+		sourceColumn: flagged_rows
+
+		annotation SummarizationSetBy = Automatic
+
+	partition data_quality = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\yamin\OneDrive\Desktop\Operations-Performance-Analytics\Operations-Performance-Analytics\data\processed\data_quality.csv"),[Delimiter=",", Columns=2, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"check", type text}, {"flagged_rows", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

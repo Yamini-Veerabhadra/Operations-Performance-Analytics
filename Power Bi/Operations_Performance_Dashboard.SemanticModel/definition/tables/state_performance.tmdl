@@ -1,0 +1,108 @@
+table state_performance
+	lineageTag: 5142c560-7353-4f9e-9fc6-54c425ee692b
+
+	column customer_state
+		dataType: string
+		lineageTag: 8edcfaf0-990e-48e2-811c-5371ee0eee41
+		summarizeBy: none
+		sourceColumn: customer_state
+
+		annotation SummarizationSetBy = Automatic
+
+	column orders
+		dataType: int64
+		formatString: 0
+		lineageTag: dc907e18-053e-4d69-a736-c80c108f7793
+		summarizeBy: sum
+		sourceColumn: orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivered
+		dataType: int64
+		formatString: 0
+		lineageTag: 2bc7c3ab-3e02-4e5e-a075-18cd68ddd335
+		summarizeBy: sum
+		sourceColumn: delivered
+
+		annotation SummarizationSetBy = Automatic
+
+	column eligible
+		dataType: int64
+		formatString: 0
+		lineageTag: 62490202-7ec9-4ea8-b56a-31b4a946f08c
+		summarizeBy: sum
+		sourceColumn: eligible
+
+		annotation SummarizationSetBy = Automatic
+
+	column late
+		dataType: int64
+		formatString: 0
+		lineageTag: 63cfcd4f-64fc-4a41-b49a-d98d24541562
+		summarizeBy: sum
+		sourceColumn: late
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_time
+		dataType: int64
+		formatString: 0
+		lineageTag: 99fcd790-fc6e-420d-9045-09bc0b3449c0
+		summarizeBy: sum
+		sourceColumn: on_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column revenue
+		dataType: double
+		lineageTag: 58af7d6c-ed15-4fd7-b4ca-b217cdfdd396
+		summarizeBy: sum
+		sourceColumn: revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_transit_days
+		dataType: double
+		lineageTag: aea550dc-7f93-4f34-b643-5f1cbae26b82
+		summarizeBy: sum
+		sourceColumn: avg_transit_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column late_rate
+		dataType: double
+		lineageTag: 9f4cbe57-bef3-4dcd-bfa8-9d31d57a6ec1
+		summarizeBy: sum
+		sourceColumn: late_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column on_time_rate
+		dataType: double
+		lineageTag: bf0e4dfa-0c87-484e-b472-db5c69e07d09
+		summarizeBy: sum
+		sourceColumn: on_time_rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition state_performance = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\yamin\OneDrive\Desktop\Operations-Performance-Analytics\Operations-Performance-Analytics\data\processed\state_performance.csv"),[Delimiter=",", Columns=10, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"customer_state", type text}, {"orders", Int64.Type}, {"delivered", Int64.Type}, {"eligible", Int64.Type}, {"late", Int64.Type}, {"on_time", Int64.Type}, {"revenue", type number}, {"avg_transit_days", type number}, {"late_rate", type number}, {"on_time_rate", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

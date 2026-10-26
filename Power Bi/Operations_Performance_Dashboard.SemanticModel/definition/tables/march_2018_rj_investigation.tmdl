@@ -1,0 +1,53 @@
+table march_2018_rj_investigation
+	lineageTag: a247ebd8-2acd-4688-9cda-16d1c216612b
+
+	column late
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 25750a3d-547b-4ce2-a79a-1a4447ece2be
+		summarizeBy: none
+		sourceColumn: late
+
+		annotation SummarizationSetBy = Automatic
+
+	column orders
+		dataType: int64
+		formatString: 0
+		lineageTag: 89c1bcc2-88cc-45dc-9bfc-40bfa60cab82
+		summarizeBy: sum
+		sourceColumn: orders
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_shipping_days
+		dataType: double
+		lineageTag: 7c3c7ac7-a7a0-41da-8d37-1ca21d799fae
+		summarizeBy: sum
+		sourceColumn: avg_shipping_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_approval_to_carrier_days
+		dataType: double
+		lineageTag: 12f379dd-1203-46ba-babb-39385b80489a
+		summarizeBy: sum
+		sourceColumn: avg_approval_to_carrier_days
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition march_2018_rj_investigation = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\yamin\OneDrive\Desktop\Operations-Performance-Analytics\Operations-Performance-Analytics\data\processed\march_2018_rj_investigation.csv"),[Delimiter=",", Columns=4, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"late", type logical}, {"orders", Int64.Type}, {"avg_shipping_days", type number}, {"avg_approval_to_carrier_days", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
